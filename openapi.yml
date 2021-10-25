@@ -1,0 +1,281 @@
+openapi: '3.1.0'
+info:
+  title: Humaniq Coin Nodes Api
+  version: '1.0'
+servers:
+  - url: https://api.node.psec.pro/v1/api
+paths:
+  /status:
+    get:
+      responses:
+        '200':
+          description: Server work fine
+
+  /api/list:
+    get:
+      responses:
+        '200':
+          description: Return supported coin on api server
+
+  /list/coins:
+    get:
+      responses:
+        '200':
+          description: Return support coins on price api
+
+  /prices/coins/list:
+    get:
+      responses:
+        '200':
+          description: Return all prices for all support coins
+
+  /prices/coins/list/prepared:
+      get:
+        responses:
+          '200':
+            description: Return all prices for all support coins (adapted for mobile app)
+      post:
+        consumes:
+        - application/x-www-form-urlencoded
+        parameters:
+        - in: query
+          name: Coins
+          required: true
+          schema:
+            type: string
+        responses:
+          '200':
+            description: Return filtered prices for filtered support coins (adapted for mobile app)
+
+  /prices/coins/list/prepared/json:
+    post:
+      parameters:
+      - in: query
+        name: Coins
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Return filtered prices for filtered support coins (adapted for mobile app). Request in post json
+
+  /prices/all:
+    get:
+      responses:
+        '200':
+          description: Return all prices
+
+  /prices/current/{coin}:
+    get:
+      parameters:
+        - name: coin
+          in: path
+          required: true
+          schema:
+              type: string
+      responses:
+        '200':
+          description: Return prices for curent coin
+  
+  /nodes/info-all:
+    get:
+      responses:
+        '200':
+          description: Return info about all running nodes
+  
+  /node/{type_wallet}/info:
+    get:
+      parameters:
+        - name: type_wallet
+          in: path
+          required: true
+          schema:
+              type: string
+      responses:
+        '200':
+          description: Info about current nodes
+  
+  /node/{type_wallet}/new/wallet:
+    get:
+      parameters:
+        - name: type_wallet
+          in: path
+          required: true
+          schema:
+              type: string
+      responses:
+        '200':
+          description: Generate new wallet on current node
+
+  /node/{type_wallet}/wallet/{wallet}:
+    get:
+      parameters:
+        - name: type_wallet
+          in: path
+          required: true
+          schema:
+              type: string
+        - name: wallet
+          in: path
+          required: true
+          schema:
+              type: string
+      responses:
+        '200':
+          description: Info about current wallet in this node
+
+  /node/{type_wallet}/tx/{tx}:
+    get:
+      parameters:
+        - name: type_wallet
+          in: path
+          required: true
+          schema:
+              type: string
+        - name: tx
+          in: path
+          required: true
+          schema:
+              type: string
+      responses:
+        '200':
+          description: Info about current transaction in this node
+
+  /node/{type_wallet}/helper/transaction:
+    post:
+      parameters:
+        - name: type_wallet
+          in: path
+          required: true
+          schema:
+              type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+              type: string
+        - name: to
+          in: query
+          required: true
+          schema:
+              type: string
+      responses:
+        '200':
+          description: Help info from node. Price gas, fee and others params.
+
+  /node/{type_wallet}/send:
+    post:
+        parameters:
+        - in: path
+          name: type_wallet
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: From
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: To
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: Amount
+          required: true
+          schema:
+            type: float
+        - in: query
+          name: Fee
+          required: true
+          schema:
+            type: float
+        responses:
+          '200':
+            description: Send money from wallet to other wallet
+
+  /node/{type_wallet:[a-z0-9]+}/multisend:
+    post:
+        parameters:
+        - in: path
+          name: type_wallet
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: From
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: To
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: Amount
+          required: true
+          schema:
+            type: float
+        - in: query
+          name: Fee
+          required: true
+          schema:
+            type: float
+        responses:
+          '200':
+            description: Send money from multi wallet to other wallet
+
+  /node/{type_wallet}/broadcast/raw:
+    post:
+        parameters:
+        - in: path
+          name: type_wallet
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: raw_tx
+          required: true
+          schema:
+            type: string
+        responses:
+          '200':
+            description: Broadcast this transaction on this node
+
+  /node/{type_wallet}/tools/restart:
+    get:
+      parameters:
+        - name: type_wallet
+          in: path
+          required: true
+          schema:
+              type: string
+      responses:
+        '200':
+          description: Services api. Restart this node
+
+  /system/backup:
+    get:
+      responses:
+        '200':
+          description: Services api. Return zip backup data from service
+
+  /api/system/restore:
+    post:
+      parameters:
+      - in: query
+        name: data
+        required: true
+        schema:
+          type: file
+      responses:
+        '200':
+          description: Services api. Reinit with backup data all nodes
+
+  /system/restart-all:
+    get:
+      responses:
+        '200':
+          description: Services api. Restart all nodes
