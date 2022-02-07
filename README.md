@@ -1,4 +1,4 @@
-# coin-nodes-rest-goMissing
+# coin-nodes-rest-go
 
 In process dev
 
