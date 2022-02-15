@@ -12,6 +12,8 @@ IP - ip address
 
 PORT - port for this address
 
+Need use user, pass for bitcoind
+
 ### bitcoin.json
 
 ```JSON
