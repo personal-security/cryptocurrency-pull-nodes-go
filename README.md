@@ -2,6 +2,10 @@
 
 In process dev
 
+## Bitcoind setup
+
+https://gist.github.com/rjmacarthy/b56497a81a6497bfabb1
+
 ## Configs files
 
 Create all files in root folder config/*
